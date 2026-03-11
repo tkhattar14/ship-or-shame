@@ -1,0 +1,22 @@
+# Data (private — scores and commitment details)
+data/commitments/
+data/scores.json
+data/posts/
+data/markdown-posts/
+
+# Config (contains credentials)
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

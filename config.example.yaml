@@ -1,0 +1,88 @@
+# Accountability Engine Configuration
+# Copy this to config.yaml and customize.
+
+# Who's being held accountable
+human:
+  name: "Your Name"
+  timezone: "Asia/Kolkata"
+
+# Accountability rules
+accountability:
+  # Can the human veto/kill a post before it goes out?
+  # false = maximum accountability (recommended)
+  # true = human reviews before posting
+  veto: false
+
+  # Tone of public posts
+  # honest-and-direct: States facts, calls out failures, celebrates wins
+  # encouraging-but-real: Positive framing but still honest about misses
+  # brutal: No mercy. Maximum shame on bad days.
+  tone: "honest-and-direct"
+
+  # Who gets looped in when things slip repeatedly
+  escalation_partner: "Partner Name"
+
+  # Days of <50% completion before escalation triggers
+  escalation_threshold: 3
+
+# Daily commitment settings
+commitments:
+  # How many commitments per day (2-5 enforced)
+  daily_count: 3
+
+  # When to ask for commitments (local timezone)
+  morning_ask_time: "10:00"
+
+  # Follow-up nudge if no response
+  followup_time: "10:30"
+
+  # End-of-day review — auto-misses pending items
+  eod_review_time: "21:00"
+
+  # Which day for weekly review
+  weekly_review_day: "sunday"
+
+# Publishing settings
+publishing:
+  # Which platforms to post on
+  platforms:
+    - twitter
+    # - linkedin
+    # - markdown  # Local file output (always available as fallback)
+
+  # When to post daily update (after EOD review)
+  daily_post_time: "21:30"
+
+  # When to post weekly thread
+  weekly_post_day: "sunday"
+  weekly_post_time: "20:00"
+
+  # Twitter/X credentials (or set as environment variables)
+  twitter:
+    api_key: ""
+    api_secret: ""
+    access_token: ""
+    access_secret: ""
+    bearer_token: ""
+
+# Optional: external data sources for auto-detection
+data_sources:
+  trello:
+    enabled: false
+    boards: []  # Board IDs to monitor
+    label: ""   # Filter cards by this label
+  calendar:
+    enabled: false
+    command: "gog cal list"  # Command to list today's events
+  github:
+    enabled: false
+    repos: []   # owner/repo to monitor for merged PRs
+
+# Topics that must NEVER appear in public posts
+off_limits:
+  - customer_names
+  - exact_revenue_numbers  # Use ranges or percentages
+  - personal_life
+  - other_people_without_consent
+  - security_credentials
+  - legal_matters
