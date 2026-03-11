@@ -4,6 +4,10 @@
 
 **An AI that publicly posts whether you shipped or not. Every day. No veto. No hiding.**
 
+<p align="center">
+  <img src="assets/ship-or-shame-meme.png" alt="Ship or Shame" width="500">
+</p>
+
 ## What It Does
 
 ```
