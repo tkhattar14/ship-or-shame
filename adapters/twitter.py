@@ -23,14 +23,29 @@ except ImportError:
 
 
 def load_config():
-    """Load Twitter credentials from env or config file."""
+    """Load Twitter credentials from env, .bashrc, or config file."""
     config_path = Path(__file__).resolve().parent.parent / "config.yaml"
+
+    # Try env first, fall back to parsing .bashrc (non-interactive shells skip exports)
+    def get_env_or_bashrc(key):
+        val = os.environ.get(key, "")
+        if not val:
+            bashrc = Path.home() / ".bashrc"
+            try:
+                for line in bashrc.read_text().splitlines():
+                    if key in line and "export" in line:
+                        val = line.split('"')[1] if '"' in line else ""
+                        break
+            except Exception:
+                pass
+        return val
+
     creds = {
-        "api_key": os.environ.get("TWITTER_API_KEY", ""),
-        "api_secret": os.environ.get("TWITTER_API_SECRET", ""),
-        "access_token": os.environ.get("TWITTER_ACCESS_TOKEN", ""),
-        "access_secret": os.environ.get("TWITTER_ACCESS_SECRET", ""),
-        "bearer_token": os.environ.get("TWITTER_BEARER_TOKEN", ""),
+        "api_key": get_env_or_bashrc("TWITTER_API_KEY"),
+        "api_secret": get_env_or_bashrc("TWITTER_API_SECRET"),
+        "access_token": get_env_or_bashrc("TWITTER_ACCESS_TOKEN"),
+        "access_secret": get_env_or_bashrc("TWITTER_ACCESS_SECRET"),
+        "bearer_token": get_env_or_bashrc("TWITTER_BEARER_TOKEN"),
     }
 
     # Try config file if env vars missing
