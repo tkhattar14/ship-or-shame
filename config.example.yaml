@@ -73,7 +73,7 @@ data_sources:
     label: ""   # Filter cards by this label
   calendar:
     enabled: false
-    command: "gog cal list"  # Command to list today's events
+    command: "gws calendar events list"  # Command to list today's events
   github:
     enabled: false
     repos: []   # owner/repo to monitor for merged PRs

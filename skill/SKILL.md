@@ -203,10 +203,35 @@ See `references/post-templates.md` for all templates. Key formats:
 4. **Day 5 of <50%:** Weekly thread highlights the slump with analysis of why
 5. **Full week of <50%:** Trigger a "hard conversation" — AI requests a call/chat to reassess priorities
 
+## Calendar Blocking
+
+After commitments are recorded, block Tushar's calendar so the tasks are visible as time blocks.
+
+```bash
+# Block a focus slot for today's commitments (uses gws CLI)
+export GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND=file
+gws calendar events insert --params '{"calendarId": "primary"}' --json '{
+  "summary": "🎯 Ship or Shame: [task summary]",
+  "description": "Today'\''s commitments:\n1. Task 1\n2. Task 2\n3. Task 3\n\nNo excuses. Ship it.",
+  "start": {"dateTime": "YYYY-MM-DDTHH:MM:SS+05:30"},
+  "end": {"dateTime": "YYYY-MM-DDTHH:MM:SS+05:30"},
+  "attendees": [{"email": "tusharkhattar14@gmail.com"}],
+  "transparency": "opaque",
+  "reminders": {"useDefault": false, "overrides": [{"method": "popup", "minutes": 15}]}
+}'
+```
+
+**Rules:**
+- Create ONE calendar block after morning commitments are confirmed
+- Block a 2-3 hour focus window in the afternoon (1 PM - 4 PM IST default, adjust if calendar is busy)
+- Include all 3 commitments in the event description
+- Invite tusharkhattar14@gmail.com so it shows on Tushar's personal calendar
+- Set as "busy" (opaque) so it blocks the time
+
 ## Integration Notes
 
 - **OpenClaw:** Runs as a skill. Cron jobs handle scheduling. Agent handles conversation.
 - **Twitter/X:** Uses API v2. Credentials in config. Thread support for weekly posts.
 - **Trello:** Optional. Reads cards to auto-detect completions. Uses API key + token.
-- **Calendar:** Optional. Uses `gog` CLI or any iCal-compatible source.
+- **Calendar:** Uses `gws` CLI to block focus time on Tushar's calendar after morning commitments.
 - **Works without any integrations** — purely manual commitments via chat also work.
